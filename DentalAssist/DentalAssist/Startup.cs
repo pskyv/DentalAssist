@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalAssist.Models;
+using DentalAssist.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,9 @@ namespace DentalAssist
             // Add framework services.
             services.AddDbContext<DentalAssistContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IPatientRepository, PatientRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddMvc();
         }
