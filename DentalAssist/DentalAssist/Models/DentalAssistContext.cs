@@ -9,6 +9,7 @@ namespace DentalAssist.Models
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Dentist> Dentists { get; set; }
         public DbSet<DentalOperation> DentalOperations { get; set; }
+        public DbSet<DentalOperationItem> DentalOperationItems { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Tooth> Teeth { get; set; }
@@ -19,6 +20,7 @@ namespace DentalAssist.Models
             modelBuilder.Entity<Patient>().ToTable("Patient");
             modelBuilder.Entity<Dentist>().ToTable("Dentist");
             modelBuilder.Entity<DentalOperation>().ToTable("DentalOperation");
+            modelBuilder.Entity<DentalOperationItem>().ToTable("DentalOperationItem");
             modelBuilder.Entity<Appointment>().ToTable("Appointment");
             modelBuilder.Entity<Session>().ToTable("Session");
             modelBuilder.Entity<Tooth>().ToTable("Tooth");
@@ -33,6 +35,10 @@ namespace DentalAssist.Models
 
             modelBuilder.Entity<DentalOperation>()
                 .HasOne(d => d.Dentist)
+                .WithMany(p => p.DentalOperations);
+
+            modelBuilder.Entity<DentalOperation>()
+                .HasOne(d => d.DentalOperationItem)
                 .WithMany(p => p.DentalOperations);
 
             modelBuilder.Entity<Session>()

@@ -8,9 +8,10 @@ using DentalAssist.Models;
 namespace DentalAssist.Migrations
 {
     [DbContext(typeof(DentalAssistContext))]
-    partial class DentalAssistContextModelSnapshot : ModelSnapshot
+    [Migration("20170505204900_AddDentalOperationItem")]
+    partial class AddDentalOperationItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

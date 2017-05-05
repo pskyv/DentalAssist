@@ -7,7 +7,11 @@ namespace DentalAssist.Models
     {
         public int DentalOperationId { get; set; }
 
-        public string Description { get; set; }
+        public int PatientId { get; set; }
+
+        public int DentistId { get; set; }
+
+        public int DentalOperationItemId { get; set; }
 
         public DentalOperationStatus Status { get; set; }
 
@@ -15,15 +19,13 @@ namespace DentalAssist.Models
 
         public decimal Price { get; set; }
 
-        public string Notes { get; set; }
-
-        public int PatientId { get; set; }
-
-        public int DentistId { get; set; }
+        public string Notes { get; set; }        
 
         public Patient Patient { get; set; }
 
         public Dentist Dentist { get; set; }
+
+        public DentalOperationItem DentalOperationItem { get; set; }
 
         public ICollection<DentalOperationTooth> DentalOperationTeeth { get; set; } = new List<DentalOperationTooth>();
 
