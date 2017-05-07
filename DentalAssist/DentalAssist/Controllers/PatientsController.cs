@@ -18,10 +18,17 @@ namespace DentalAssist.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: /<controller>/
-        public JsonResult Index()
+        // GET: /<controller>/PatientsJson
+        public JsonResult PatientsJson()
         {
             return Json(_unitOfWork.PatientRepository.GetAll());
+        }
+
+        public IActionResult Index()
+        {
+            ViewData["PageHeader"] = "Patients";
+            ViewData["PageHeaderDescription"] = "List of acticve patients";
+            return View(_unitOfWork.PatientRepository.GetAll());
         }
     }
 }
