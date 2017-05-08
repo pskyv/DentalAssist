@@ -11,5 +11,15 @@ namespace DentalAssist.Services
         public PatientRepository(DentalAssistContext context) : base(context) { }
 
         public DentalAssistContext DentalAssistContext => Context as DentalAssistContext;
+
+        public async Task<IEnumerable<Patient>> GetPatientsAsync(string searchString)
+        {
+            if(string.IsNullOrEmpty(searchString))
+            {
+                return await GetAllAsync();
+            }
+
+            return Find(p => p.FullName.StartsWith(searchString, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }

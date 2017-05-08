@@ -11,7 +11,7 @@ namespace DentalAssist.Models
 
         public string LastName { get; set; }
 
-        public string FullName => FirstName + " " + LastName;
+        public string FullName => LastName + " " + FirstName;
 
         public DateTime? BirthDate { get; set; }
 

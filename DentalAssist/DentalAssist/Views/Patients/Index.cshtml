@@ -1,6 +1,21 @@
 ﻿@Model IEnumerable<Patient>
 
 <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="searchString" class="form-control" placeholder="Search by fullname...">
+                <span class="input-group-btn">
+                    <button type="submit" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-12">
         @foreach (var patient in Model)
         {

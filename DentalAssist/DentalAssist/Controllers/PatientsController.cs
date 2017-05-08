@@ -21,14 +21,14 @@ namespace DentalAssist.Controllers
         // GET: /<controller>/PatientsJson
         public JsonResult PatientsJson()
         {
-            return Json(_unitOfWork.PatientRepository.GetAll());
+            return Json(_unitOfWork.PatientRepository.GetAllAsync());
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             ViewData["PageHeader"] = "Patients";
             ViewData["PageHeaderDescription"] = "List of acticve patients";
-            return View(_unitOfWork.PatientRepository.GetAll());
+            return View(await _unitOfWork.PatientRepository.GetPatientsAsync(searchString));
         }
     }
 }
