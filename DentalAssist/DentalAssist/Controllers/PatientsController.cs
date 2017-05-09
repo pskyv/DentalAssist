@@ -24,11 +24,18 @@ namespace DentalAssist.Controllers
             return Json(_unitOfWork.PatientRepository.GetAllAsync());
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["PageHeader"] = "Patients";
             ViewData["PageHeaderDescription"] = "List of acticve patients";
             return View(await _unitOfWork.PatientRepository.GetPatientsAsync(searchString));
+        }
+
+        [HttpGet]
+        public IActionResult PatientDetail(int id)
+        {
+            return View(_unitOfWork.PatientRepository.Find(p => p.PatientId == id).FirstOrDefault());
         }
     }
 }

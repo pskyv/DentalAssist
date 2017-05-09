@@ -22,11 +22,12 @@
             <div class="box-footer box-comments">
                 <div class="box-comment">
                     <!-- User image -->
-                    <img class="img-circle img-sm" src="img/user1-128x128.jpg" alt="User Image">
+                    <img class="img-circle img-sm" src="~/img/user1-128x128.jpg" alt="User Image">
 
                     <div class="comment-text">
                         <span class="username">
-                            <a href="#">@patient.FullName</a><span class="text-muted pull-right"><i class="fa fa-phone"></i> @patient.Phone1</span>
+                            <a asp-controller="Patients" asp-action="PatientDetail" asp-route-id="@patient.PatientId">@patient.FullName</a>
+                            <span class="text-muted pull-right"><i class="fa fa-phone"></i> @patient.Phone1</span>
                         </span><!-- /.username -->
                         @patient.Notes                        
                     </div>
