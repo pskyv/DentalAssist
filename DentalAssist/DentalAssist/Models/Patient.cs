@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DentalAssist.Models
 {
@@ -13,6 +14,8 @@ namespace DentalAssist.Models
 
         public string FullName => LastName + " " + FirstName;
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? BirthDate { get; set; }
 
         public string SSN { get; set; }

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace DentalAssist
 {
@@ -31,13 +32,16 @@ namespace DentalAssist
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddDbContext<DentalAssistContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

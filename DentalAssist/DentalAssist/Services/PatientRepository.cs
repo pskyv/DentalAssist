@@ -1,4 +1,5 @@
 ﻿using DentalAssist.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace DentalAssist.Services
             }
 
             return Find(p => p.FullName.StartsWith(searchString, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        public async Task<Patient> GetPatientAsync(int id)
+        {
+            return await Context.Set<Patient>().Where(p => p.PatientId == id).Include(p => p.DentalOperations).ThenInclude(p => p.DentalOperationItem).SingleOrDefaultAsync();
         }
     }
 }
