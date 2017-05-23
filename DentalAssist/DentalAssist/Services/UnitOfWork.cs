@@ -18,9 +18,9 @@ namespace DentalAssist.Services
         
         public IPatientRepository PatientRepository { get; }
 
-        public int SaveChanges()
+        public Task<int> SaveChangesAsync()
         {
-            return _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
 
         public void Dispose()

@@ -27,5 +27,10 @@ namespace DentalAssist.Services
         {
             return await Context.Set<Patient>().Where(p => p.PatientId == id).Include(p => p.DentalOperations).ThenInclude(p => p.DentalOperationItem).SingleOrDefaultAsync();
         }
+
+        public void UpdatePatient(Patient patient)
+        {
+            Context.Update(patient);
+        }
     }
 }

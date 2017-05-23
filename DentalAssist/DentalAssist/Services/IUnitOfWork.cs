@@ -9,6 +9,6 @@ namespace DentalAssist.Services
     {
         IPatientRepository PatientRepository { get; }
 
-        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

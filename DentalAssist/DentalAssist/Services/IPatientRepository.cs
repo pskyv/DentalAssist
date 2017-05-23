@@ -9,5 +9,7 @@ namespace DentalAssist.Services
         Task<IEnumerable<Patient>> GetPatientsAsync(string searchString);
 
         Task<Patient> GetPatientAsync(int id);
+
+        void UpdatePatient(Patient patient);
     }
 }

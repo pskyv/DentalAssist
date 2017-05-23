@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using DentalAssist.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using DentalAssist.Models;
+using Microsoft.AspNetCore.Routing;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,6 +52,18 @@ namespace DentalAssist.Controllers
             }
 
             return View(patient);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPatient(Patient patient)
+        {
+            if(ModelState.IsValid)
+            {
+                _unitOfWork.PatientRepository.UpdatePatient(patient);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+            return RedirectToAction("PatientDetail", new RouteValueDictionary(new { controller = "Patients", action = "PatientDetail", id = patient.PatientId }));
         }
     }
 }

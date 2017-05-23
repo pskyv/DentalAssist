@@ -1,8 +1,19 @@
 ﻿@model IEnumerable<Patient>
 
 <div class="row">
+    <div class="col-xs-12">
+        <button type="button" class="btn btn-primary">
+            <i class="fa fa-user-md"></i> New Patient
+        </button>
+        @*<button type="button" class="btn btn-danger" style="margin-left: 5px;">
+            <i class="fa fa-remove"></i> Delete Patient
+        </button>*@
+    </div>
+</div><br />
+
+<div class="row">
     <div class="col-md-4">
-        <form asp-action="Index" method="get" class="sidebar-form">
+        <form asp-action="Index" method="get">
             <div class="input-group">
                 <input type="text" name="searchString" class="form-control" placeholder="Search by fullname...">
                 <span class="input-group-btn">
@@ -14,26 +25,27 @@
         </form>
     </div>
 </div>
+<br />
 
 <div class="row">
     <div class="col-md-12">
-        @foreach (var patient in Model)
-        {
-            <div class="box-footer box-comments">
-                <div class="box-comment">
-                    <!-- User image -->
-                    <img class="img-circle img-sm" src="~/img/user1-128x128.jpg" alt="User Image">
+    @foreach (var patient in Model)
+    {
+        <div class="box-footer box-comments">
+            <div class="box-comment">
+                <!-- User image -->
+                <img class="img-circle img-sm" src="~/img/user1-128x128.jpg" alt="User Image">
 
-                    <div class="comment-text">
-                        <span class="username">
-                            <a asp-controller="Patients" asp-action="PatientDetail" asp-route-id="@patient.PatientId">@patient.FullName</a>
-                            <span class="text-muted pull-right"><i class="fa fa-phone"></i> @patient.Phone1</span>
-                        </span><!-- /.username -->
-                        @patient.Notes                        
-                    </div>
-                    <!-- /.comment-text -->
+                <div class="comment-text">
+                    <span class="username">
+                        <a asp-controller="Patients" asp-action="PatientDetail" asp-route-id="@patient.PatientId">@patient.FullName</a>
+                        <span class="text-muted pull-right"><i class="fa fa-phone"></i> @patient.Phone1</span>
+                    </span><!-- /.username -->
+                    @patient.Notes
                 </div>
+                <!-- /.comment-text -->
             </div>
-        }
+        </div>
+    }
     </div>
 </div>
