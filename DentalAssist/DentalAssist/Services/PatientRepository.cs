@@ -25,12 +25,35 @@ namespace DentalAssist.Services
 
         public async Task<Patient> GetPatientAsync(int id)
         {
-            return await Context.Set<Patient>().Where(p => p.PatientId == id).Include(p => p.DentalOperations).ThenInclude(p => p.DentalOperationItem).SingleOrDefaultAsync();
+            return await DentalAssistContext.Patients.Where(p => p.PatientId == id).Include(p => p.DentalOperations).ThenInclude(p => p.DentalOperationItem).SingleOrDefaultAsync();
         }
 
         public void UpdatePatient(Patient patient)
         {
-            Context.Update(patient);
+            DentalAssistContext.Update(patient);
+        }
+
+        public void UpdateDentalOperation(DentalOperation dop)
+        {
+            DentalAssistContext.Update(dop);
+        }
+
+        public async Task<List<DentalOperationItem>> GetDentalOperationItemsAsync()
+        {
+            return await DentalAssistContext.DentalOperationItems.ToListAsync();
+        }
+
+        public void AddDentalOperation(DentalOperation dop)
+        {
+            DentalAssistContext.DentalOperations.Add(dop);
+        }
+
+        public async Task<DentalOperation> GetDentalOperationAsync(int id)
+        {
+            return await DentalAssistContext.DentalOperations
+                .Where(d => d.DentalOperationId == id)
+                .Include(d => d.Patient )
+                .SingleOrDefaultAsync();
         }
     }
 }

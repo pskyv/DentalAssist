@@ -1,0 +1,62 @@
+﻿@model EditDentalOperationViewModel
+
+<br />
+
+<div class="col-lg-6">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewData["FormTitle"]</h3>
+        </div>
+        <form class="form-horizontal" asp-action="AddOrEditPatientDentalOperation" method="post">
+            <div class="box-body">
+                <input asp-for="@Model.DentalOperation.DentalOperationId" type="hidden">
+                <input asp-for="@Model.DentalOperation.DentistId" type="hidden">
+                <input asp-for="@Model.DentalOperation.PatientId" type="hidden">
+                <div class="form-group">
+                        <label class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" asp-for="@Model.DentalOperation.DentalOperationItemId"
+                                    asp-items="@(new SelectList(Model.DentalOperationItems,"DentalOperationItemId","Description"))">
+                                <option>Please select one</option>
+                            </select>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Start date</label>
+                    <div class="col-sm-10">
+                        <input asp-for="@Model.DentalOperation.StarDate" type="date" class="form-control" placeholder="Start date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Price</label>
+                    <div class="col-sm-10">
+                        <input asp-for="@Model.DentalOperation.Price" type="number" class="form-control" placeholder="price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10">
+                        <select class="form-control select2" asp-for="@Model.DentalOperation.Status"
+                                asp-items="Html.GetEnumSelectList<DentalOperationStatus>()">
+                            >
+                            <option>Please select one</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Notes</label>
+                    <div class="col-sm-10">
+                        <textarea asp-for="@Model.DentalOperation.Notes" class="form-control" rows="3" placeholder="Notes ..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                @*<button asp-action="PatientDetail" asp-route-id="@Model.DentalOperation.PatientId" type="submit" class="btn btn-default">Cancel</button>*@
+                <a class="btn btn-default" asp-controller="Patients" asp-action="PatientDetail" asp-route-id="@Model.DentalOperation.PatientId">Cancel</a>
+                <button type="submit" class="btn btn-primary pull-right">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

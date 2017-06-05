@@ -11,5 +11,13 @@ namespace DentalAssist.Services
         Task<Patient> GetPatientAsync(int id);
 
         void UpdatePatient(Patient patient);
+
+        void UpdateDentalOperation(DentalOperation dop);
+
+        Task<List<DentalOperationItem>> GetDentalOperationItemsAsync();
+
+        void AddDentalOperation(DentalOperation dop);
+
+        Task<DentalOperation> GetDentalOperationAsync(int id);
     }
 }
