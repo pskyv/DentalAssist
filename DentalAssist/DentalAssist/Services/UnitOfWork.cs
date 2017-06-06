@@ -14,9 +14,12 @@ namespace DentalAssist.Services
         {
             _context = context;
             PatientRepository = new PatientRepository(_context);
+            DashboardRepository = new DashboardRepository(_context);
         }
         
         public IPatientRepository PatientRepository { get; }
+
+        public IDashboardRepository DashboardRepository { get; }
 
         public Task<int> SaveChangesAsync()
         {
