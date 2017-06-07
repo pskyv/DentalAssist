@@ -6,8 +6,8 @@
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="widget-user-header bg-aqua">
             @*<div class="widget-user-image">
-                <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
-            </div>*@
+                    <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                </div>*@
             <!-- /.widget-user-image -->
             @*<h3 class="widget-user-username">Nadia Carmichael</h3>*@
             <h4 class="ui-widget-header">Current month's summary</h4>
@@ -15,8 +15,20 @@
         <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
                 @foreach (var dop in Model.GroupedDentalOperations)
-                { 
-                    <li><a href="#">@dop.DentalOperationName <span class="pull-right badge bg-red">@dop.Count</span></a></li>
+                {
+                    <li>
+                        <a href="#">
+                            @dop.DentalOperationName
+                            @if (dop.Count == 3)
+                            {
+                                <span class="pull-right badge bg-red">@dop.Count</span>
+                            }
+                            else
+                            {
+                                <span class="pull-right badge bg-yellow">@dop.Count</span>
+                            }
+                        </a>
+                    </li>
                 }
             </ul>
         </div>
