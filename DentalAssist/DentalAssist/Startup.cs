@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DentalAssist.Models;
+﻿using DentalAssist.Models;
 using DentalAssist.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Razor;
+using NToastNotify;
 
 namespace DentalAssist
 {
@@ -39,9 +36,15 @@ namespace DentalAssist
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddNToastNotify(new ToastOption()
+            {
+                ProgressBar = false,
+                PositionClass = NToastNotify.Constants.ToastPositions.BottomRight
+            });
+
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

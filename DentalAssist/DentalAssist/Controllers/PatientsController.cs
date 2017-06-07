@@ -8,6 +8,7 @@ using DentalAssist.Models;
 using Microsoft.AspNetCore.Routing;
 using DentalAssist.ViewModels;
 using System;
+using NToastNotify;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,11 +18,13 @@ namespace DentalAssist.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<PatientsController> _localizer;
+        private IToastNotification _toastNotification;
 
-        public PatientsController(IUnitOfWork unitOfWork, IStringLocalizer<PatientsController> localizer)
+        public PatientsController(IUnitOfWork unitOfWork, IStringLocalizer<PatientsController> localizer, IToastNotification toastNotification)
         {
             _unitOfWork = unitOfWork;
             _localizer = localizer;
+            _toastNotification = toastNotification;
         }
 
         // GET: /<controller>/PatientsJson
@@ -65,7 +68,15 @@ namespace DentalAssist.Controllers
             if(ModelState.IsValid)
             {
                 _unitOfWork.PatientRepository.UpdatePatient(patient);
-                await _unitOfWork.SaveChangesAsync();
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync();
+                    _toastNotification.AddToastMessage("Task Completed", "Patient details were saved succesfully", ToastEnums.ToastType.Success);
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddToastMessage("Task Failed", e.Message, ToastEnums.ToastType.Error);
+                }
             }
 
             return RedirectToAction("PatientDetail", new RouteValueDictionary(new { controller = "Patients", action = "PatientDetail", id = patient.PatientId }));
@@ -77,7 +88,15 @@ namespace DentalAssist.Controllers
             if (ModelState.IsValid)
             {
                 _unitOfWork.PatientRepository.Add(newPatient);
-                await _unitOfWork.SaveChangesAsync();
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync();
+                    _toastNotification.AddToastMessage("Task Completed", "Patient was added succesfully", ToastEnums.ToastType.Success);
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddToastMessage("Task Failed", e.Message, ToastEnums.ToastType.Error);
+                }
             }
 
             return RedirectToAction("PatientDetail", new RouteValueDictionary(new { controller = "Patients", action = "PatientDetail", id = newPatient.PatientId }));
@@ -112,20 +131,38 @@ namespace DentalAssist.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOrEditPatientDentalOperation(DentalOperation DentalOperation)
         {
+            var msg = "";
+
             if (ModelState.IsValid)
             {
                 if (DentalOperation.DentalOperationId < 1)
                 {
                     _unitOfWork.PatientRepository.AddDentalOperation(DentalOperation);
+                    msg = "Dental operation was added successfully";
                 }
                 else
                 {
                     _unitOfWork.PatientRepository.UpdateDentalOperation(DentalOperation);
+                    msg = "Dental operation was saved successfully";
                 }
-                await _unitOfWork.SaveChangesAsync();
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync();
+                    _toastNotification.AddToastMessage("Task Completed", msg, ToastEnums.ToastType.Success);
+                    return RedirectToAction("PatientDetail", new RouteValueDictionary(new { controller = "Patients", action = "PatientDetail", id = DentalOperation.PatientId }));
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddToastMessage("Task Failed", e.Message, ToastEnums.ToastType.Error);
+                }
+            }
+            else
+            {
+                _toastNotification.AddToastMessage("Task Failed", "Data is not valid", ToastEnums.ToastType.Error);                
             }
 
             return RedirectToAction("PatientDetail", new RouteValueDictionary(new { controller = "Patients", action = "PatientDetail", id = DentalOperation.PatientId }));
+
         }
     }
 }
