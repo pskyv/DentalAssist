@@ -9,22 +9,30 @@ using Microsoft.AspNetCore.Routing;
 using DentalAssist.ViewModels;
 using System;
 using NToastNotify;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DentalAssist.Controllers
 {
+    [Authorize]
     public class PatientsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStringLocalizer<PatientsController> _localizer;
+        private UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private IToastNotification _toastNotification;
 
-        public PatientsController(IUnitOfWork unitOfWork, IStringLocalizer<PatientsController> localizer, IToastNotification toastNotification)
+        public PatientsController(IUnitOfWork unitOfWork, IStringLocalizer<PatientsController> localizer, IToastNotification toastNotification, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _unitOfWork = unitOfWork;
             _localizer = localizer;
             _toastNotification = toastNotification;
+            _userManager = userManager;
+            _context = context;
         }
 
         // GET: /<controller>/PatientsJson
@@ -107,10 +115,13 @@ namespace DentalAssist.Controllers
         {
             if (id == null)
             {
+                var user = await _userManager.GetUserAsync(User); //FindByIdAsync(User.Identity.GetUserId());
+                user = _context.Users.Include(u => u.Dentist).Where(u => u.Id == user.Id).FirstOrDefault();
+
                 var newDentalOperation = new DentalOperation
                 {
                     PatientId = patientId,
-                    DentistId = 1,
+                    DentistId = user.Dentist.DentistId,
                     StarDate = DateTime.UtcNow
                 };
 

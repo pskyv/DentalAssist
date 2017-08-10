@@ -1,4 +1,6 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @await Component.InvokeAsync("NToastNotify.Toastr")
 
 <!DOCTYPE html>
@@ -183,7 +185,12 @@ desired effect
                                 <!-- The user image in the navbar-->
                                 <img src="/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                @{ 
+                                    var user = await UserManager.GetUserAsync(User);
+                                    var dentistName = user.FirstName + " " + user.LastName;
+
+                                    <span class="hidden-xs">@dentistName</span>
+                                 }
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -215,9 +222,11 @@ desired effect
                                     <div class="pull-left">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
-                                    <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
+                                    <form asp-action="Logout" asp-controller="Account" method="post">
+                                        <div class="pull-right">
+                                            <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                        </div>
+                                    </form>
                                 </li>
                             </ul>
                         </li>
@@ -241,7 +250,7 @@ desired effect
                         <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Alexander Pierce</p>
+                        <p>@dentistName</p>
                         <!-- Status -->
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>

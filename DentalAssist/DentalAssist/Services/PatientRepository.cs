@@ -9,7 +9,10 @@ namespace DentalAssist.Services
 {
     public class PatientRepository : Repository<Patient>, IPatientRepository
     {
-        public PatientRepository(DentalAssistContext context) : base(context) { }
+        public PatientRepository(DentalAssistContext context) : base(context)
+        {
+            
+        }
 
         public DentalAssistContext DentalAssistContext => Context as DentalAssistContext;
 

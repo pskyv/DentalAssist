@@ -3,6 +3,8 @@ namespace DentalAssist.Models
 {
     public class DentalOperationTooth
     {
+        public int DentalOperationToothId { get; set; }
+
         public int DentalOperationId { get; set; }
 
         public int ToothId { get; set; }

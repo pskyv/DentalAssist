@@ -27,7 +27,7 @@ namespace DentalAssist.Models
             modelBuilder.Entity<DentalOperationTooth>().ToTable("DentalOperationTooth");
 
             modelBuilder.Entity<Patient>().Ignore(p => p.FullName);
-            modelBuilder.Entity<Dentist>().Ignore(d => d.FullName);
+            //modelBuilder.Entity<Dentist>().Ignore(d => d.FullName);
 
             modelBuilder.Entity<DentalOperation>()
                 .HasOne(d => d.Patient)
@@ -45,8 +45,8 @@ namespace DentalAssist.Models
                 .HasOne(s => s.DentalOperation)
                 .WithMany(d => d.Sessions);
 
-            modelBuilder.Entity<DentalOperationTooth>()
-            .HasKey(d => new { d.DentalOperationId, d.ToothId });
+            //modelBuilder.Entity<DentalOperationTooth>()
+            //.HasKey(d => new { d.DentalOperationId, d.ToothId });
 
             modelBuilder.Entity<DentalOperationTooth>()
                 .HasOne(dt => dt.DentalOperation)

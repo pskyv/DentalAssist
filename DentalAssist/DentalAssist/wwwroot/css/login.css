@@ -1,0 +1,15 @@
+﻿/*body {
+    background-image: url(../images/dentistry1.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    height: 100%;
+    width: 100%;
+}*/
+
+.login-img {
+    /*opacity: 0.5;
+    filter: alpha(opacity=50);  For IE8 and earlier */
+    height:100%;
+}

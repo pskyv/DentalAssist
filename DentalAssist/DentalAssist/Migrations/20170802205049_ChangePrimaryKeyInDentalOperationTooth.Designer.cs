@@ -8,9 +8,10 @@ using DentalAssist.Models;
 namespace DentalAssist.Migrations
 {
     [DbContext(typeof(DentalAssistContext))]
-    partial class DentalAssistContextModelSnapshot : ModelSnapshot
+    [Migration("20170802205049_ChangePrimaryKeyInDentalOperationTooth")]
+    partial class ChangePrimaryKeyInDentalOperationTooth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -102,6 +103,10 @@ namespace DentalAssist.Migrations
                 {
                     b.Property<int>("DentistId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.HasKey("DentistId");
 

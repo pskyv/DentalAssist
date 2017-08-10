@@ -1,5 +1,6 @@
 ﻿using DentalAssist.Services;
 using DentalAssist.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DentalAssist.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
